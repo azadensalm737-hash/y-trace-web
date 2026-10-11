@@ -6,10 +6,10 @@
 <meta name="theme-color" content="#101827">
 <title>Y-Trace | البحث في المصادر العامة</title>
 <style>
-:root{--bg:#0b1220;--card:#121d2e;--line:#2a3a51;--text:#eef4ff;--muted:#a8b7cc;--gold:#e6b84a;--blue:#19314b;--green:#9de2bf}
+:root{--bg:#0b1220;--card:#121d2e;--line:#2a3a51;--text:#eef4ff;--muted:#a8b7cc;--gold:#e6b84a;--blue:#19314b;--green:#9de2bf;--red:#ffc4b8}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top,#1b3049 0,#0b1220 55%);font-family:system-ui,Tahoma,Arial,sans-serif;color:var(--text);padding:14px;line-height:1.65}
-.wrap{max-width:780px;margin:auto}
+body{margin:0;background:radial-gradient(circle at top,#1b3049 0,#0b1220 55%);font-family:system-ui,Tahoma,Arial,sans-serif;color:var(--text);padding:14px;line-height:1.7}
+.wrap{max-width:850px;margin:auto}
 .brand{display:flex;align-items:center;gap:12px;margin:8px 0 18px}
 .logo{width:50px;height:50px;flex:0 0 50px;border-radius:15px;background:linear-gradient(135deg,#ffe69a,#bd8b23);display:grid;place-items:center;color:#111827;font-weight:900;font-size:21px;box-shadow:0 6px 20px #0004}
 .brand h1{margin:0;font-size:25px}.brand p{margin:2px 0;color:var(--muted);font-size:13px}
@@ -24,139 +24,131 @@ input:focus,select:focus{outline:2px solid #e6b84a66;border-color:var(--gold)}
 .secondary{background:#1e324b;color:var(--text);border:1px solid #35465f}
 .hint{color:var(--muted);font-size:13px;margin-bottom:0}
 .notice{border-right:3px solid var(--gold);padding:10px 12px;background:#1b293b;border-radius:8px;color:#d9e2f0;font-size:13px}
-.status{display:flex;gap:8px;align-items:flex-start;background:#102b29;border:1px solid #285b4e;border-radius:12px;padding:11px 12px;color:#d7f5e7;font-size:13px;margin-top:12px}
-.results{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.result{display:block;text-decoration:none;color:var(--text);background:#0d1726;border:1px solid var(--line);padding:12px;border-radius:12px;min-height:72px}
+.status{background:#102b29;border:1px solid #285b4e;border-radius:12px;padding:11px 12px;color:#d7f5e7;font-size:13px;margin-top:12px;white-space:pre-wrap}
+.status.error{background:#321d22;border-color:#714047;color:var(--red)}
+.results{display:grid;grid-template-columns:1fr;gap:9px}
+.result{display:block;text-decoration:none;color:var(--text);background:#0d1726;border:1px solid var(--line);padding:13px;border-radius:12px;overflow-wrap:anywhere}
 .result:active{transform:scale(.99);border-color:var(--gold)}
-.result strong{display:block;margin-bottom:3px}.result span{font-size:12px;color:var(--muted)}
+.result strong{display:block;margin-bottom:3px;color:#ffe19a}.result .url{font-size:12px;color:#9de2bf;direction:ltr;text-align:left;display:block;overflow-wrap:anywhere;margin-top:5px}
+.result p{font-size:13px;color:#c8d4e5;margin:7px 0 0}
 .pills{display:flex;flex-wrap:wrap;gap:7px}
 .pill{border:1px solid #35465f;background:#0b1422;padding:7px 10px;border-radius:999px;font-size:13px;direction:ltr;unicode-bidi:plaintext;overflow-wrap:anywhere}
 .badge{display:inline-block;font-size:11px;color:#1b1608;background:var(--gold);border-radius:999px;padding:2px 8px;margin-right:6px}
 .footer{text-align:center;color:#8495ad;font-size:12px;padding:15px}
 [hidden]{display:none!important}
-@media(max-width:520px){.row,.results{grid-template-columns:1fr}.card{padding:14px}.brand h1{font-size:23px}}
+@media(max-width:520px){.row{grid-template-columns:1fr}.card{padding:14px}.brand h1{font-size:23px}}
 </style>
 </head>
 <body><main class="wrap">
-<header class="brand"><div class="logo" aria-hidden="true">YT</div><div><h1>Y-Trace</h1><p>مساعد البحث في المصادر العامة • نسخة ويب</p></div></header>
+<header class="brand"><div class="logo" aria-hidden="true">YT</div><div><h1>Y-Trace</h1><p>البحث في المصادر العامة • نتائج ويب فعلية</p></div></header>
 <section class="card">
-<h2 class="section-title">ابدأ البحث</h2>
+<h2 class="section-title">ابحث عن رقم هاتف</h2>
 <label for="phone">رقم الهاتف</label>
 <input id="phone" type="tel" inputmode="tel" placeholder="مثال: 7XXXXXXXX أو +967XXXXXXXXX" autocomplete="off">
 <div class="row">
 <div><label for="country">رمز الدولة</label><select id="country">
 <option value="+967">اليمن (+967)</option><option value="+966">السعودية (+966)</option><option value="+971">الإمارات (+971)</option><option value="+20">مصر (+20)</option><option value="+962">الأردن (+962)</option><option value="+965">الكويت (+965)</option><option value="+974">قطر (+974)</option><option value="+968">عُمان (+968)</option><option value="+973">البحرين (+973)</option><option value="+1">الولايات المتحدة/كندا (+1)</option><option value="+44">بريطانيا (+44)</option><option value="+91">الهند (+91)</option><option value="other">رقم دولي / دولة أخرى</option>
 </select></div>
-<div><label for="engine">محرك البحث المفضل</label><select id="engine"><option value="google">Google</option><option value="bing">Bing</option><option value="duck">DuckDuckGo</option></select></div>
+<div><label for="engine">روابط بحث إضافية</label><select id="engine"><option value="google">Google</option><option value="bing">Bing</option><option value="duck">DuckDuckGo</option></select></div>
 </div>
-<button class="btn primary" id="search" type="button">تجهيز روابط البحث</button>
-<p class="hint">سيتم تجهيز روابط بحث عامة وصيغ محتملة للرقم. لا يقوم الموقع باستخراج اسم مالك الرقم تلقائيًا.</p>
+<button class="btn primary" id="search" type="button">ابحث واعرض النتائج هنا</button>
+<p class="hint">سيبحث Y-Trace في صفحات الويب العامة ويعرض النتائج التي توفرها خدمة البحث. قد لا تظهر معلومات عن الرقم إذا لم تكن منشورة علنًا.</p>
 <div id="status" class="status" role="status" hidden></div>
 </section>
 <section class="card" id="summaryCard" hidden>
-<h2 class="section-title">ملخص البحث</h2>
-<p id="summaryText" class="hint"></p>
+<h2 class="section-title">ملخص البحث</h2><p id="summaryText" class="hint"></p>
 </section>
-<section class="card" id="variantsCard" hidden>
-<h2 class="section-title">صيغ الرقم المحتملة</h2><div class="pills" id="variants"></div>
-<p class="hint">هذه صيغ تنسيق محتملة فقط، وليست معلومات مؤكدة عن صاحب الرقم.</p>
-</section>
-<section class="card" id="webCard" hidden>
-<h2 class="section-title">البحث في الويب <span class="badge">روابط خارجية</span></h2>
-<p class="hint">افتح رابطًا لعرض النتائج في محرك البحث المحدد.</p><div class="results" id="webLinks"></div>
+<section class="card" id="resultsCard" hidden>
+<h2 class="section-title">نتائج البحث الفعلية <span class="badge" id="countBadge">0 نتيجة</span></h2>
+<div class="results" id="actualResults"></div>
 </section>
 <section class="card" id="socialCard" hidden>
-<h2 class="section-title">البحث في المنصات العامة</h2><p class="hint">هذه الروابط تنقلك إلى عمليات بحث داخل المنصات، ولا تعني أن حسابًا مرتبطًا بالرقم قد عُثر عليه.</p><div class="results" id="socialLinks"></div>
+<h2 class="section-title">البحث في مواقع التواصل</h2>
+<p class="hint">هذه نتائج صفحات عامة مفهرسة فقط؛ لا تثبت أن حسابًا بعينه يخص صاحب الرقم.</p>
+<div class="results" id="socialLinks"></div>
 </section>
 <section class="card" id="appsCard" hidden>
-<h2 class="section-title">خدمات التعرّف على الأرقام</h2><p class="hint">خدمات مستقلة قد تتطلب تسجيل الدخول أو التطبيق، وقد لا تتوفر نتائج في كل البلدان.</p><div class="results" id="appsLinks"></div>
+<h2 class="section-title">خدمات تعريف الأرقام</h2>
+<p class="hint">هذه روابط خدمات مستقلة وليست نتائج جلبها Y-Trace. لا تتوفر قاعدة مجانية موحدة تضمن الاسم والتسميات لكل رقم.</p>
+<div class="results" id="appsLinks"></div>
 </section>
-<section class="card" id="exportCard" hidden>
-<h2 class="section-title">تصدير التقرير</h2><button class="btn secondary" id="export" type="button">تنزيل تقرير روابط البحث TXT</button>
-<p class="hint">يحتوي التقرير على صيغ الرقم وروابط البحث، وليس نتائج مستخرجة أو هوية مؤكدة.</p>
+<section class="card">
+<p class="notice">الخصوصية والدقة: يعرض Y-Trace محتوى منشورًا علنًا فقط. لا يستطيع تأكيد اسم مالك الرقم أو استخراج حسابات خاصة. أي اسم أو تسمية يجب التحقق منها من مصدرها الأصلي.</p>
 </section>
-<section class="card"><p class="notice">تنبيه مهم: Y-Trace في هذه النسخة يجهّز روابط بحث عامة فقط. لا يعرض نتائج فعلية من محركات البحث ولا يؤكد هوية صاحب الرقم. استخدم المعلومات المنشورة علنًا بصورة مشروعة واحترم خصوصية الآخرين.</p></section>
 <div class="footer">Y-Trace • البحث في المصادر العامة</div>
 </main>
 <script>
 const $ = id => document.getElementById(id);
-let current = {raw:"", variants:[], links:[]};
 function uniq(items){return [...new Set(items.filter(Boolean))]}
 function makeVariants(raw, code){
-  const trimmed=raw.trim();
-  const digits=trimmed.replace(/\D/g,"");
-  if(!digits) return [];
+  const trimmed=raw.trim(),digits=trimmed.replace(/\D/g,"");
+  if(!digits)return [];
   if(code==="other"){
     const list=[trimmed,digits];
-    if(trimmed.startsWith("00")) list.push("+"+digits.slice(2));
-    if(trimmed.startsWith("+")) list.push("00"+digits);
+    if(trimmed.startsWith("00"))list.push("+"+digits.slice(2));
+    if(trimmed.startsWith("+"))list.push("00"+digits);
     return uniq(list).filter(x=>x.length>=5);
   }
-  const c=code.replace("+","");
-  let local=digits;
-  if(local.startsWith("00"+c)) local=local.slice(c.length+2);
-  else if(local.startsWith(c) && (trimmed.startsWith("+") || trimmed.startsWith("00"))) local=local.slice(c.length);
-  else if(local.startsWith(c) && local.length>9) local=local.slice(c.length);
-  if(local.startsWith("0")) local=local.slice(1);
-  const list=[trimmed,digits,"+"+c+local,"00"+c+local,c+local,local];
-  if(local) list.push("0"+local);
-  return uniq(list).filter(x=>x.length>=5);
+  const c=code.replace("+","");let local=digits;
+  if(local.startsWith("00"+c))local=local.slice(c.length+2);
+  else if(local.startsWith(c)&&(trimmed.startsWith("+")||trimmed.startsWith("00")))local=local.slice(c.length);
+  else if(local.startsWith(c)&&local.length>9)local=local.slice(c.length);
+  if(local.startsWith("0"))local=local.slice(1);
+  return uniq([trimmed,digits,"+"+c+local,"00"+c+local,c+local,local,local?"0"+local:""]).filter(x=>x.length>=5);
 }
 function queryUrl(engine,q){
   const enc=encodeURIComponent(q);
-  if(engine==="bing") return "https://www.bing.com/search?q="+enc;
-  if(engine==="duck") return "https://duckduckgo.com/?q="+enc;
+  if(engine==="bing")return "https://www.bing.com/search?q="+enc;
+  if(engine==="duck")return "https://duckduckgo.com/?q="+enc;
   return "https://www.google.com/search?q="+enc;
 }
 function addLink(container,title,desc,url){
   const a=document.createElement("a");a.className="result";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
-  const strong=document.createElement("strong"),span=document.createElement("span");
-  strong.textContent=title;span.textContent=desc;a.append(strong,span);$(container).appendChild(a);
-  current.links.push({title,desc,url});
+  const strong=document.createElement("strong"),p=document.createElement("p"),u=document.createElement("span");
+  strong.textContent=title;p.textContent=desc;u.className="url";u.textContent=url;a.append(strong,p,u);$(container).appendChild(a);
 }
-function doSearch(){
+function renderActualResults(items){
+  const container=$("actualResults");container.replaceChildren();
+  if(!items.length){container.textContent="لم تُرجع خدمة البحث نتائج لهذه الصيغة. جرّب رقمًا مع رمز الدولة أو ابحث بصيغة مختلفة.";return;}
+  for(const item of items){
+    const a=document.createElement("a");a.className="result";a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+    const title=document.createElement("strong"),url=document.createElement("span"),desc=document.createElement("p");
+    title.textContent=item.title||item.url;url.className="url";url.textContent=item.url;desc.textContent=item.text||"لم يتوفر مقتطف نصي من الصفحة.";
+    a.append(title,url,desc);container.appendChild(a);
+  }
+}
+async function doSearch(){
   const raw=$("phone").value.trim(),code=$("country").value;
-  if(!raw){$("status").hidden=false;$("status").textContent="اكتب رقم الهاتف أولًا."; $("phone").focus();return;}
+  if(!raw){$("status").hidden=false;$("status").className="status error";$("status").textContent="اكتب رقم الهاتف أولًا.";$("phone").focus();return;}
   const variants=makeVariants(raw,code);
-  if(!variants.length){$("status").hidden=false;$("status").textContent="لم نتمكن من قراءة الرقم. تحقق من الإدخال ثم حاول مجددًا.";return;}
-  current={raw,variants,links:[]};
-  $("status").hidden=false;$("status").textContent="تم تجهيز روابط البحث فقط؛ لم يتم العثور تلقائيًا على هوية أو نتائج مؤكدة.";
-  $("summaryText").textContent="تم إدخال رقم وإنشاء "+variants.length+" صيغ محتملة و روابط للبحث عنها يدويًا.";
-  $("summaryCard").hidden=false;
-  $("variants").replaceChildren();
-  variants.forEach(v=>{const el=document.createElement("span");el.className="pill";el.textContent=v;$("variants").appendChild(el);});
-  $("variantsCard").hidden=false;
-  ["webLinks","socialLinks","appsLinks"].forEach(id=>$(id).replaceChildren());
-  const engine=$("engine").value;
-  const primary=variants[0];
-  const searchTerm=uniq(variants.slice(0,4)).map(v=>'"'+v+'"').join(" OR ");
-  addLink("webLinks","بحث عن الرقم وصِيَغه","بحث واحد يجمع الصيغ المحتملة",queryUrl(engine,searchTerm));
-  addLink("webLinks","بحث عن الرقم مع سياق","إضافة كلمات مثل هاتف أو اتصال",queryUrl(engine,'"'+primary+'" (phone OR contact OR telephone)'));
-  addLink("webLinks","البحث عن الرقم في الصفحات العامة","بحث أوسع باستخدام الرقم المدخل",queryUrl(engine,'"'+raw+'"'));
-  const platforms=[
-    ["Facebook","site:facebook.com"],["Instagram","site:instagram.com"],["TikTok","site:tiktok.com"],
-    ["LinkedIn","site:linkedin.com"],["Telegram","site:t.me"],["X","site:x.com"]
-  ];
-  platforms.forEach(([name,site])=>addLink("socialLinks",name,"فتح بحث عام في "+name,queryUrl("google",site+' "'+primary+'"')));
-  addLink("socialLinks","WhatsApp","فتح محادثة فقط إذا كان الرقم صالحًا ومسجلًا","https://wa.me/"+primary.replace(/\D/g,"").replace(/^0+/,""));
-  addLink("appsLinks","Truecaller","خدمة مستقلة للتعرّف على المتصل","https://www.truecaller.com/search/"+encodeURIComponent(primary));
-  addLink("appsLinks","Sync.me","خدمة مستقلة للبحث عن الأرقام","https://sync.me/");
-  addLink("appsLinks","NumLookup","خدمة بحث عكسي عن الأرقام","https://www.numlookup.com/");
-  addLink("appsLinks","Tellows","تقييمات وبلاغات الأرقام","https://www.tellows.com/");
-  addLink("appsLinks","Whoscall","خدمة تعريف المتصل","https://whoscall.com/");
-  ["webCard","socialCard","appsCard","exportCard"].forEach(id=>$(id).hidden=false);
-  $("webCard").scrollIntoView({behavior:"smooth",block:"start"});
+  if(!variants.length){$("status").hidden=false;$("status").className="status error";$("status").textContent="تحقق من الرقم ثم حاول مجددًا.";return;}
+  $("search").disabled=true;$("search").textContent="جارٍ البحث...";
+  $("status").hidden=false;$("status").className="status";$("status").textContent="جارٍ البحث في صفحات الويب العامة…";
+  ["summaryCard","resultsCard","socialCard","appsCard"].forEach(id=>$(id).hidden=true);
+  try{
+    const response=await fetch("/api/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:raw,region:code,variants})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||"تعذر تنفيذ البحث. تحقق من إعدادات الخادم.");
+    const items=Array.isArray(data.results)?data.results:[];
+    $("summaryText").textContent="اكتمل البحث عن الرقم المدخل. عُثر على "+items.length+" نتيجة ويب من المصادر العامة.";
+    $("countBadge").textContent=items.length+" نتيجة";
+    renderActualResults(items);
+    $("summaryCard").hidden=false;$("resultsCard").hidden=false;
+    $("status").textContent=items.length?"تم جلب نتائج فعلية من خدمة البحث. افتح أي نتيجة لزيارة المصدر الأصلي.":"اكتمل الاتصال بخدمة البحث، لكن لم تظهر نتائج مطابقة.";
+    const engine=$("engine").value,primary=variants[0];
+    $("socialLinks").replaceChildren();
+    [["Facebook","site:facebook.com"],["Instagram","site:instagram.com"],["TikTok","site:tiktok.com"],["LinkedIn","site:linkedin.com"],["Telegram","site:t.me"],["X","site:x.com"]].forEach(([name,site])=>addLink("socialLinks",name,"بحث عام عن الرقم في "+name,queryUrl("google",site+' "'+primary+'"')));
+    addLink("socialLinks","بحث عام عن الرقم","ابحث عن الرقم في صفحات الويب",queryUrl(engine,'"'+primary+'"'));
+    $("socialCard").hidden=false;
+    $("appsLinks").replaceChildren();
+    [["Truecaller","https://www.truecaller.com/search/"+encodeURIComponent(primary),"قد يتطلب تسجيل الدخول أو التطبيق"],["Sync.me","https://sync.me/","خدمة مستقلة"],["NumLookup","https://www.numlookup.com/","قد تختلف التغطية حسب البلد"],["Tellows","https://www.tellows.com/","بلاغات وتقييمات الأرقام"],["Whoscall","https://whoscall.com/","خدمة تعريف المتصل"]].forEach(([name,url,desc])=>addLink("appsLinks",name,desc,url));
+    $("appsCard").hidden=false;
+  }catch(err){
+    $("status").className="status error";
+    $("status").textContent=(err&&err.message)?err.message:"حدث خطأ أثناء البحث.";
+  }finally{$("search").disabled=false;$("search").textContent="ابحث واعرض النتائج هنا";}
 }
 $("search").addEventListener("click",doSearch);
 $("phone").addEventListener("keydown",e=>{if(e.key==="Enter")doSearch()});
-$("export").addEventListener("click",()=>{
-  if(!current.raw)return;
-  const lines=["Y-Trace - تقرير روابط البحث","الرقم المدخل: "+current.raw,"","الصيغ المحتملة:",...current.variants,"","روابط البحث:"];
-  current.links.forEach(item=>lines.push(item.title+" — "+item.desc+"\n"+item.url));
-  lines.push("","تنبيه: هذا التقرير يحتوي على روابط بحث عامة فقط، وليس نتائج فعلية أو هوية مؤكدة.");
-  const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download="Y-Trace-report.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-});
 </script>
 </body></html>
