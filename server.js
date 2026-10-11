@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: "20kb" }));
-app.use(express.static("public"));
+app.use(express.static("."));
 app.use("/api/", rateLimit({ windowMs: 60_000, limit: 15, standardHeaders: "draft-7", legacyHeaders: false }));
 
 app.get("/api/health", (_req, res) => {
