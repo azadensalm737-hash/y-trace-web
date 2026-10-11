@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1220"><title>Y-Trace Pro — OSINT</title>
+<style>
+:root{--bg:#0b1220;--card:#121d2e;--line:#2a3a52;--text:#edf3ff;--muted:#a9b7ca;--gold:#e6bd59;--green:#48d6a0;--blue:#79aaff;--red:#ffb4a9}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b43 0,#0b1220 58%);font-family:system-ui,Tahoma,Arial,sans-serif;color:var(--text);line-height:1.6;padding:14px}.wrap{max-width:850px;margin:auto}.brand{display:flex;align-items:center;gap:12px;margin:8px 0 18px}.logo{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#ffe7a0,#b47b18);color:#111;font-weight:950;font-size:21px}.brand h1{margin:0;font-size:25px}.brand p{margin:2px 0;color:var(--muted);font-size:13px}.card{background:rgba(18,29,46,.97);border:1px solid var(--line);border-radius:17px;padding:16px;margin:13px 0}.title{margin:0 0 10px;font-size:18px}label{display:block;font-weight:750;margin:8px 0 5px}input,select{width:100%;border:1px solid #3a4b65;background:#0b1422;color:var(--text);padding:12px;border-radius:10px;font:inherit}input:focus,select:focus{outline:1px solid var(--gold)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:10px;padding:12px 14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--gold);color:#151515;width:100%;margin-top:12px}.secondary{background:#1d3048;color:var(--text);border:1px solid #3a4b65}.hint{font-size:12px;color:var(--muted)}.note{border-right:3px solid var(--gold);padding-right:10px;font-size:13px;color:#dce5f3}.pills{display:flex;flex-wrap:wrap;gap:7px}.pill{direction:ltr;unicode-bidi:plaintext;background:#0b1422;border:1px solid #35465f;border-radius:999px;padding:6px 10px;font-size:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.link{display:block;background:#0d1726;border:1px solid var(--line);border-radius:11px;padding:11px;text-decoration:none;color:var(--text)}.link strong{display:block}.link small{display:block;color:var(--muted);font-size:12px}.badge{display:inline-block;font-size:11px;color:#08140f;background:var(--green);padding:1px 7px;border-radius:99px;margin-top:5px}.status{font-size:13px;color:var(--muted);padding:8px 0}.good{color:var(--green)}.warn{color:var(--red)}.hidden{display:none}.footer{text-align:center;color:#8293aa;font-size:12px;padding:12px}@media(max-width:540px){.row,.grid{grid-template-columns:1fr}.brand h1{font-size:22px}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="brand"><div class="logo">YT</div><div><h1>Y-Trace</h1><p>مساعد OSINT للمصادر العامة — نسخة ويب محسّنة</p></div></header>
+<section class="card">
+<h2 class="title">1. أدخل الرقم</h2>
+<label for="phone">رقم الهاتف</label><input id="phone" type="tel" inputmode="tel" placeholder="مثال: 780123456 أو +967780123456">
+<div class="row"><div><label for="region">الدولة الافتراضية</label><select id="region"><option value="YE" selected>اليمن (+967)</option><option value="SA">السعودية (+966)</option><option value="AE">الإمارات (+971)</option><option value="EG">مصر (+20)</option><option value="JO">الأردن (+962)</option><option value="OM">عُمان (+968)</option><option value="KW">الكويت (+965)</option><option value="QA">قطر (+974)</option><option value="BH">البحرين (+973)</option><option value="US">الولايات المتحدة (+1)</option><option value="GB">بريطانيا (+44)</option><option value="IN">الهند (+91)</option></select></div><div><label for="engine">محرك البحث</label><select id="engine"><option value="google">Google</option><option value="bing">Bing</option><option value="duck">DuckDuckGo</option></select></div></div>
+<button id="run" class="btn primary">تحقق من الرقم وجهّز البحث</button><div id="validation" class="status">لم يتم إدخال رقم بعد.</div>
+<p class="hint">تستخدم الأداة مكتبة تنسيق أرقام دولية عند توفر الإنترنت. التحقق من البنية لا يثبت ملكية الرقم أو أن الخط نشط.</p>
+</section>
+<section id="variantsBox" class="card hidden"><h2 class="title">2. الصيغ المعيارية والبديلة</h2><div id="variants" class="pills"></div><p class="hint">الصيغ مخصصة لتوسيع البحث فقط؛ قد لا تكون كل صيغة مناسبة لكل شبكة أو دولة.</p></section>
+<section id="apiBox" class="card hidden"><h2 class="title">3. نتائج البحث المباشرة</h2><div id="apiStatus" class="status"></div><div id="apiResults" class="grid"></div><p class="hint">النتائج مستخرجة من محرك البحث Exa. ظهور رقم في صفحة لا يثبت هوية مالكه.</p></section>
+<section id="webBox" class="card hidden"><h2 class="title">4. بحث الويب العام</h2><div id="web" class="grid"></div></section>
+<section id="lookupBox" class="card hidden"><h2 class="title">5. كواشف الأرقام والخدمات</h2><div id="lookup" class="grid"></div><p class="hint">لا تتوفر واجهة عامة موثوقة تتيح جلب أسماء كل الأرقام من هذه الخدمات. الروابط تفتح الخدمة الرسمية؛ قد تتطلب التطبيق أو تسجيل الدخول.</p></section>
+<section id="socialBox" class="card hidden"><h2 class="title">6. البحث في المواقع والمنصات</h2><div id="social" class="grid"></div></section>
+<section id="dedupeBox" class="card hidden"><h2 class="title">7. تجميع المصادر وإزالة التكرار</h2><div id="dedupe" class="status"></div><p class="hint">هذه النسخة تزيل تكرار روابط المصادر التي تنشئها. دمج صفحات النتائج المتشابهة تلقائيًا يتطلب جلب النتائج من واجهة API قانونية أو خدمة وسيطة.</p></section>
+<section id="exportBox" class="card hidden"><h2 class="title">8. حفظ التقرير</h2><button id="export" class="btn secondary">تنزيل تقرير TXT</button></section>
+<section class="card"><p class="note"><b>حدود مهمة:</b> هذه النسخة لا تزحف إلى الويب ولا تستخرج قواعد بيانات خاصة. البحث الآلي الفعلي يحتاج إلى مزود بحث API ومفتاح وخادم يحمي المفتاح. واجهة Truecaller الرسمية تركز على التحقق/مشاركة ملف المستخدم بموافقته، وليست واجهة عامة للبحث عن أي رقم.</p></section>
+<div class="footer">Y-Trace • المعلومات العامة فقط • لا توجد ضمانات بظهور نتائج</div>
+</main>
+<script>
+const $=x=>document.getElementById(x);let report={raw:"",region:"YE",e164:"",variants:[],sources:[]};let libReady=false;
+function unique(a){return [...new Set(a.filter(Boolean))]}
+function qurl(engine,q){const e=encodeURIComponent(q);return engine==="bing"?"https://www.bing.com/search?q="+e:engine==="duck"?"https://duckduckgo.com/?q="+e:"https://www.google.com/search?q="+e}
+function addLink(target,title,desc,url){if(report.sources.some(s=>s.url===url))return;let a=document.createElement("a");a.className="link";a.href=url;a.target="_blank";a.rel="noopener noreferrer";let b=document.createElement("strong"),d=document.createElement("small");b.textContent=title;d.textContent=desc;a.append(b,d);$(target).append(a);report.sources.push({title,url})}
+function fallbackVariants(raw,region){let digits=raw.replace(/\D/g,"");if(!digits)return[];let codes={YE:"967",SA:"966",AE:"971",EG:"20",JO:"962",OM:"968",KW:"965",QA:"974",BH:"973",US:"1",GB:"44",IN:"91"},c=codes[region];let local=digits;if(raw.trim().startsWith("+"))return unique([raw.trim(),"00"+digits,digits]);if(digits.startsWith("00"))return unique([raw.trim(),"+"+digits.slice(2),digits.slice(2)]);if(c&&digits.startsWith(c))local=digits.slice(c.length);return unique([raw.trim(),digits,"+"+c+local,"00"+c+local,c+local,local,local.startsWith("0")?"+"+c+local.slice(1):"",local.startsWith("0")?c+local.slice(1):""])}
+function showPills(v){$("variants").replaceChildren();v.forEach(x=>{let s=document.createElement("span");s.className="pill";s.textContent=x;$("variants").append(s)})}
+async function run(){let raw=$("phone").value.trim(),region=$("region").value,engine=$("engine").value;if(!raw){alert("أدخل رقم الهاتف أولًا.");return}report={raw,region,e164:"",variants:[],sources:[]};["web","lookup","social"].forEach(id=>$(id).replaceChildren());let v=fallbackVariants(raw,region),validMsg="تم إنشاء صيغ أولية؛ لم يتم تأكيد صلاحية الرقم.";try{if(window.libphonenumber){let p=window.libphonenumber.parsePhoneNumber(raw,region);if(p){report.e164=p.number;v=unique([p.number,p.formatInternational(),p.formatNational(),...v]);validMsg=(p.isValid()?"رقم مطابق لقواعد التنسيق المعروفة.":"الرقم لا يطابق قواعد الصيغة المتوقعة.")+" الصيغة الدولية: "+p.number+(p.getType()?" • النوع التقريبي: "+p.getType():"");}}}catch(e){validMsg="تعذّر التحقق الكامل؛ تم إنشاء صيغ بحث أولية فقط."}
+report.variants=v;$("validation").textContent=validMsg;$("validation").className="status "+(validMsg.startsWith("رقم مطابق")?"good":"");showPills(v);$("variantsBox").classList.remove("hidden");
+let primary=report.e164||v[0], quoted=unique(v).slice(0,6).map(x=>'"'+x+'"').join(" OR ");
+// Actual web search through the protected server; the API key never enters this page.
+$("apiBox").classList.remove("hidden");
+$("apiResults").replaceChildren();
+$("apiStatus").textContent="جارٍ جلب النتائج العامة…";
+try {
+  const response = await fetch("/api/search", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({phone:raw, region, variants:v.slice(0,8)})
+  });
+  const data = await response.json();
+  if(!response.ok) throw new Error(data.error || "تعذر إكمال البحث");
+  const seen = new Set();
+  report.apiResults = data.results || [];
+  for (const item of report.apiResults) {
+    const key = (item.url || "").split("#")[0].replace(/\/+$/,"").toLowerCase();
+    if(!key || seen.has(key)) continue;
+    seen.add(key);
+    const a=document.createElement("a"); a.className="link"; a.href=item.url; a.target="_blank"; a.rel="noopener noreferrer";
+    const title=document.createElement("strong"); title.textContent=item.title || item.url;
+    const desc=document.createElement("small"); desc.textContent=item.text || item.highlights?.join(" ") || item.url;
+    const source=document.createElement("small"); source.textContent="المصدر: "+(item.url ? new URL(item.url).hostname : "غير معروف");
+    a.append(title,desc,source); $("apiResults").append(a);
+    report.sources.push({title:item.title || item.url, url:item.url});
+  }
+  $("apiStatus").textContent="وصلت "+seen.size+" نتيجة فريدة من Exa.";
+  if(!seen.size) $("apiStatus").textContent="لم يعثر محرك البحث على نتائج مناسبة لهذا الرقم.";
+} catch(err) {
+  $("apiStatus").textContent="تعذر جلب النتائج: "+err.message+". تحقق من إعداد الخادم ومفتاح API.";
+}
+
+addLink("web","بحث عن جميع الصيغ","استعلام موحد في "+$("engine").selectedOptions[0].text,qurl(engine,quoted));v.slice(0,5).forEach(x=>addLink("web","بحث حرفي: "+x,"مطابقة الرقم في صفحات مفهرسة",qurl(engine,'"'+x+'"')));addLink("web","بحث عن اسم/جهة مرتبطة","إضافة كلمات phone أو contact",qurl(engine,quoted+" (phone OR contact OR name)"));
+addLink("lookup","Truecaller","خدمة تعريف المتصل/التحقق","https://www.truecaller.com/");addLink("lookup","Sync.me","خدمة بحث عن الأرقام","https://sync.me/");addLink("lookup","NumLookup","خدمة البحث العكسي","https://www.numlookup.com/");addLink("lookup","Tellows","بلاغات وتقييمات الأرقام","https://www.tellows.com/");addLink("lookup","Whoscall","خدمة تعريف المتصل","https://whoscall.com/");
+[["Facebook","site:facebook.com"],["Instagram","site:instagram.com"],["TikTok","site:tiktok.com"],["LinkedIn","site:linkedin.com"],["Telegram","site:t.me"]].forEach(([n,s])=>addLink("social",n,"بحث عبر "+$("engine").selectedOptions[0].text,qurl(engine,s+' "'+primary+'"')));addLink("social","X","بحث في المنشورات العامة",'https://x.com/search?q='+encodeURIComponent('"'+primary+'"'));let wa=(report.e164||primary).replace(/\D/g,"");addLink("social","WhatsApp","فتح رابط الدردشة إن كان الرقم يستخدم الخدمة","https://wa.me/"+wa);
+["webBox","lookupBox","socialBox","dedupeBox","exportBox"].forEach(id=>$(id).classList.remove("hidden"));$("dedupe").textContent="تم تجميع "+report.sources.length+" رابطًا فريدًا؛ أزيلت الروابط المتكررة المطابقة تمامًا. لم يتم جلب محتوى صفحات النتائج تلقائيًا.";
+}
+$("run").addEventListener("click",run);$("phone").addEventListener("keydown",e=>{if(e.key==="Enter")run()});
+$("export").addEventListener("click",()=>{let lines=["Y-Trace — تقرير بحث عام","الرقم المدخل: "+report.raw,"الدولة: "+report.region,"الصيغة الدولية: "+(report.e164||"غير متاحة"),"","الصيغ:",...report.variants,"","روابط المصادر:",...report.sources.map(s=>s.title+" — "+s.url),"","ملاحظة: التقرير يحوي روابط بحث، وليس أسماء أو نتائج مؤكدة مستخرجة آليًا."];let blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="Y-Trace-report.txt";a.click();URL.revokeObjectURL(url)});
+const script=document.createElement("script");script.src="https://unpkg.com/libphonenumber-js@1.11.20/bundle/libphonenumber-js.min.js";script.onload=()=>{window.libphonenumber=window.libphonenumber||window.libphonenumberJs||window.libphonenumber;};document.head.append(script);
+</script></body></html>
